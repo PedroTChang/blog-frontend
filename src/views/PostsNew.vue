@@ -8,15 +8,17 @@ export default {
       errors: [],
     };
   },
+  created: function () {},
   methods: {
-    submit: function () {
+    createPost: function () {
       axios
         .post("/posts.json", this.newPostParams)
         .then((response) => {
-          console.log(response.data);
+          console.log("posts create", response);
           this.$router.push("/posts");
         })
         .catch((error) => {
+          console.log("posts create error", error.response);
           this.errors = error.response.data.errors;
         });
     },
@@ -25,9 +27,9 @@ export default {
 </script>
 
 <template>
-  <div class="new-post">
-    <form v-on:submit.prevent="submit()">
-      <h1>New Post</h1>
+  <div class="posts-new">
+    <h1>New Post</h1>
+    <form v-on:submit.prevent="createPost()">
       <ul>
         <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
       </ul>
@@ -37,13 +39,13 @@ export default {
       </div>
       <div>
         <label>Content:</label>
-        <input type="email" v-model="newPostParams.body" />
+        <input type="text" v-model="newPostParams.body" />
       </div>
       <div>
         <label>Image:</label>
-        <input type="password" v-model="newPostParams.image" />
+        <input type="text" v-model="newPostParams.image" />
       </div>
-      <input type="submit" value="Submit" />
+      <input type="submit" value="Create" />
     </form>
   </div>
 </template>

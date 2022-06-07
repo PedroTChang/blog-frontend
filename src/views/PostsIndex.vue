@@ -14,7 +14,7 @@ export default {
   methods: {
     indexPosts: function () {
       axios.get("/posts").then((response) => {
-        console.log(response.data);
+        console.log("posts index", response);
         this.posts = response.data;
       });
     },
@@ -27,7 +27,10 @@ export default {
     <h1>{{ message }}</h1>
     <div v-for="post in posts" v-bind:key="post.id">
       <h2>{{ post.title }}</h2>
-      <h4>{{ post.body }}</h4>
+      <img v-bind:src="post.image" v-bind:alt="post.title" />
+      <p>
+        <router-link v-bind:to="`/posts/${post.id}`">More details</router-link>
+      </p>
     </div>
   </div>
 </template>
