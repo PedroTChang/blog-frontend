@@ -6,6 +6,7 @@ export default {
     return {
       newPostParams: {},
       errors: [],
+      errorStatus: null,
     };
   },
   created: function () {},
@@ -18,8 +19,8 @@ export default {
           this.$router.push("/posts");
         })
         .catch((error) => {
-          console.log("posts create error", error.response);
           this.errors = error.response.data.errors;
+          this.errorStatus = error.response.status;
         });
     },
   },
@@ -28,8 +29,9 @@ export default {
 
 <template>
   <div class="posts-new">
-    <h1>New Post</h1>
     <form v-on:submit.prevent="createPost()">
+      <h1>New Post</h1>
+      <img v-if="errorStatus" v-bind:src="`https://http.cat/${errorStatus}`" />
       <ul>
         <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
       </ul>
@@ -40,6 +42,9 @@ export default {
       <div>
         <label>Content:</label>
         <input type="text" v-model="newPostParams.body" />
+        <small>
+          <p v-if="newPostParams.body">Character Count : {{ newPostParams.body.length }}</p>
+        </small>
       </div>
       <div>
         <label>Image:</label>

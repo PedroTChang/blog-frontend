@@ -25,12 +25,14 @@ export default {
 <template>
   <div class="home">
     <h1>{{ message }}</h1>
-    <div v-for="post in posts" v-bind:key="post.id">
-      <h2>{{ post.title }}</h2>
-      <img v-bind:src="post.image" v-bind:alt="post.title" />
-      <p>
-        <router-link v-bind:to="`/posts/${post.id}`">More details</router-link>
-      </p>
+    <div class="row">
+      <div v-for="post in posts" v-bind:key="post.id">
+        <h2>{{ post.title }}</h2>
+        <img v-bind:src="post.image" v-bind:alt="post.title" />
+        <div class="card-body">
+          <router-link v-bind:to="`/posts/${post.id}`" class="btn btn-primary">More details</router-link>
+        </div>
+      </div>
     </div>
   </div>
 </template>

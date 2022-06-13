@@ -42,10 +42,22 @@ export default {
       <div>
         <label>Password:</label>
         <input type="password" v-model="newUserParams.password" />
+        <p v-if="newUserParams.password && newUserParams.password.length > 20">
+          <small class="text-danger">Cannot exceed 20 characters</small>
+        </p>
       </div>
       <div>
         <label>Password confirmation:</label>
         <input type="password" v-model="newUserParams.password_confirmation" />
+        <p
+          v-if="
+            newUserParams.password_confirmation &&
+            newUserParams.password &&
+            newUserParams.password != newUserParams.password_confirmation
+          "
+        >
+          <small class="text-danger">Passwords must match</small>
+        </p>
       </div>
       <input type="submit" value="Submit" />
     </form>
